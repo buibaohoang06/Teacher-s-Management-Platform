@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <title>Login - Teacher's Management Platform</title>
+</head>
+<body>
+    <div id="login">
+        <form id="login-form" class="center-align" method="POST">
+            {{ form.csrf_token() }}
+            <div id="description" style="margin-bottom: 50px;">
+                <h2>Welcome back</h2>
+                <p style="font-weight: 200;">Please login with the provided username and password. <br>Only admins can create new accounts.</p>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-fill"></i></span>
+                {{ form.username(class_="form-control") }}
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-key-fill"></i></span>
+                {{ form.password(class_="form-control") }}
+            </div>
+            <div id="submit-area">
+                <a href="/forgot" style="display: inline-block; float: left; text-decoration: none; color: white">Forgot password?</a>
+                <button class="btn btn-primary" type="submit" style="display: inline-block; float: right; background-color: white; border-color: white; color: black;">Login</button>
+            </div>
+        </form>
+    </div>
+    <img src="{{ url_for('static', filename="background-login.jpg") }}">
+    <style>
+        html{
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            background-color: #f6f6f7;
+        }
+        body{
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+        #login{
+            width: 50%;
+            height: 100%;
+            background-color: #051821;
+            box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+            float: left;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        #login-form{
+            width: 60%;
+            padding: 60px;
+            margin: auto;
+            color: white
+        }
+        img{
+            display: inline-block;
+            width: 50%;
+            height: 100%;
+            right: 0;
+            float: right;
+            object-fit: cover;
+        }
+    </style>
+</body>
+</html>

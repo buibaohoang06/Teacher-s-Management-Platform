@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block title %}Member{% endblock %}
+{% block body %}
+<div id="member">
+  <nav id="navbar" class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <ul class="navbar-nav align-items-start nav nav-pills">
+        <li class="nav-item">
+          <a class="custom-button" href="#" data-bs-toggle="tab">Dashboard <i class="bi bi-menu-button-wide" style="margin-left: 5px;"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="custom-button" href="#support" data-bs-toggle="tab">Support <i class="bi bi-question-circle-fill" style="margin-left: 5px;"></i></a>
+        </li>
+        <li class="nav-item">
+          <a href="#blog" class="custom-button" data-bs-toggle="tab" aria-current="page">Blog</a>
+        </li>
+  
+        <li class="nav-item">
+          <a href="#tasks" class="custom-button" data-bs-toggle="tab">Tasks</a>
+        </li>
+  
+        <li class="nav-item">
+          <a href="#about" class="custom-button" data-bs-toggle="tab">Contact Us</a>
+        </li>
+      </ul>
+      <div class="align-items-end" style="margin-right: 15px;">
+        <a href="#" style="margin-right: 15px; text-decoration: none; color: black;" title="Create new post"><i class="bi bi-plus-lg"></i></a>
+        <a href="#" style="margin-right: 15px; text-decoration: none; color: black;" title="Change account settings"><i class="bi bi-person-circle"></i></a>
+        Hi, <b>{{ currentUser }}</b> | Currently in group <b>{{ currentGroup }}@{{ key }}</b> <a href="/{{ key }}/logout" style="margin-left: 10px;"><button type="button" class="btn btn-outline-danger">Logout</button></a>
+      </div>
+    </div>
+  </nav>
+  <div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
+  </div>
+  <div>
+    <div class="tab-content" style="margin-top: 100px; height: 100%; width: 100%;">
+      <div id="#" role="tabpanel" class="tab-pane active container">
+        
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="blog">
+        <h3 style="width: 100%; text-align: center">Status Page</h3>
+        <p style="width: 100%; text-align: center">Keep up with the latest updates from the group's admin.</p>
+        {% for post in posts %}
+          <div class="card" style="width: 50%; margin: 10px auto;">
+            <div class="card-body">
+              <h5 class="card-title">{{ post.title }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Posted by {{ post.owner }}</h6>
+              <p class="card-text">{{ post.content }}</p>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="tasks">
+        <h3 style="width: 100%; text-align: center">Task Page</h3>
+        <p style="width: 100%; text-align: center">Tasks assigned by your admin can be seen here.</p>
+        <div style="width: 50%; margin: auto; background-color: white; padding: 20px; border-radius: 15px 15px 15px 15px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Task ID</th>
+                <th scope="col">Task</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for task in tasks %}
+              <tr>
+                <th scope="col">{{ task.id }}</th>
+                <th>{{ task.description }}</th>
+                <td>{{ task.notes }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        </div>
+      <div role="tabpanel" class="tab-pane fade" id="about">test</div>
+    </div>
+  </div>
+</div>
+<style>
+  #member{
+    height: 100%;
+    width: 100%;
+    background-color: #dcdddf;
+  }
+  #navbar{
+    background-color: whitesmoke;
+    width: 100%;
+    height: 80px;
+  }
+  #dashboard{
+    padding: 100px;
+  }
+  nav > div > ul > li{
+    margin: 10px;
+  }
+  .custom-button{
+    padding: 10px;
+    color: #241c2c;
+    background-color: none;
+    border-style: none;
+    transition: background-color 0.5s;
+    text-decoration: none;
+    border-radius: 5px 5px 5px 5px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .custom-button:hover{
+    background-color: #c8c9ca;
+    color: #645bef;
+  }
+  .custom-button:active{
+    background-color: #c8c9ca;
+    color: #645bef;
+  }
+  .custom-button:focus{
+    background-color: #c8c9ca;
+    color: #645bef;
+  }
+
+</style>
+{% endblock %}

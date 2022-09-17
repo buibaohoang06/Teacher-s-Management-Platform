@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block title %}Post Blog{% endblock %}
+{% block body %}
+<div id="blog-post">
+    <nav id="navbar" class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <ul class="navbar-nav align-items-start">
+                <li class="nav-item">
+                    <a class="custom-button" href="#">Home <i class="bi bi-menu-button-wide" style="margin-left: 5px;"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="custom-button" href="/member/{{ key }}">Return to Member's Page</a>
+                </li>
+                <li class="nav-item">
+                        <a class="custom-button" href="#">Support <i class="bi bi-question-circle-fill" style="margin-left: 5px;"></i></a>
+                </li>
+            </ul>
+            <div class="align-items-end" style="margin-right: 15px;">
+                <a href="#" style="margin-right: 15px; text-decoration: none; color: black;" title="Create new post"><i class="bi bi-plus-lg"></i></a>
+                <a href="#" style="margin-right: 15px; text-decoration: none; color: black;" title="Change account settings"><i class="bi bi-person-circle"></i></a>
+                Hi, <b>{{ currentUser }}</b> | Currently managing group <b>{{ currentGroup }}@{{ key }}</b> <a href="/{{ key }}/logout" style="margin-left: 10px;"><button type="button" class="btn btn-outline-danger">Logout</button></a>
+            </div>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div id="blog-form" style="width: 50%; margin: 100px auto;">
+        <h3 style="width: 100%; text-align: center">Blog Post</h3>
+        <p style="width: 100%; text-align: center">You can now announce news, post resources from one form.</p>
+        <form method="POST">
+            {{ form.csrf_token() }}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                {{ form.title(class_="form-control") }}
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                {{ form.content(class_="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Post</button>
+        </form>
+    </div>
+</div>
+<style>
+    #blog-post{
+      height: 100%;
+      width: 100%;
+      background-color: #dcdddf;
+    }
+    #navbar{
+      background-color: whitesmoke;
+      width: 100%;
+      height: 80px;
+    }
+    #dashboard{
+      padding: 100px;
+    }
+    #first-panel{
+      background-color: white;
+      width: 40%;
+      height: fit-content;
+      padding: 20px;
+      display: inline-block;
+      float: left;
+    }
+    #second-panel{
+      background-color: white;
+      width: 58%;
+      height: fit-content;
+      display: inline-block;
+      float: right;
+      margin-left: 10px;
+    }
+    #assign-task{
+      background-color: white;
+      width: 100%;
+      height: fit-content;
+      padding: 20px;
+    }
+    #add-member{
+      background-color: white;
+      width: 100%;
+      height: fit-content;
+      padding: 20px;
+    }
+    #delete-member{
+      background-color: white;
+      width: 100%;
+      height: fit-content;
+      padding: 20px;
+    }
+    ul > li{
+      margin: 10px;
+    }
+    .custom-button{
+      padding: 10px;
+      color: #241c2c;
+      background-color: none;
+      border-style: none;
+      transition: background-color 0.5s;
+      text-decoration: none;
+      border-radius: 5px 5px 5px 5px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .custom-button:hover{
+      background-color: #c8c9ca;
+      color: #645bef;
+    }
+    .custom-button:active{
+      background-color: #c8c9ca;
+      color: #645bef;
+    }
+    .custom-button:focus{
+      background-color: #c8c9ca;
+      color: #645bef;
+    }
+  
+  </style>
+{% endblock %}
