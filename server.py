@@ -1,5 +1,4 @@
-from threading import currentThread
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -8,9 +7,10 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 from keygen import KeyGen
 from markupsafe import escape
-
+from blueprint import bp
 
 app = Flask(__name__)
+app.register_blueprint(bp, url_prefix="/test")
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
@@ -20,7 +20,6 @@ app.config['SECRET_KEY'] = "testkey"
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
-
 
 
 @login_manager.user_loader
@@ -103,6 +102,10 @@ class BlogPost(FlaskForm):
     submit = SubmitField("Post")
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('error.html'), 404
+
 @app.route("/")
 def home():
     return render_template('home.html')
@@ -123,7 +126,10 @@ def login(key):
                 return redirect(url_for(f'/{key}/login'))
     else:
         return "Invalid group key!"
-    return render_template('login.html', form=form)
+    try:
+        return render_template('login.html', form=form)
+    except IndexError:
+        return render_template('error.html'), 400
 
 
 @app.route("/<key>/admin", methods=['POST', 'GET'])
